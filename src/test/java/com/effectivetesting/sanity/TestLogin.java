@@ -32,7 +32,6 @@ public class TestLogin {
 		driver.findElement(By.id("create_post")).click();
 		
 		String currentUrl = driver.getCurrentUrl();
-		
 		assertTrue(currentUrl.contains("/entries/create/"));
 	}
 	
