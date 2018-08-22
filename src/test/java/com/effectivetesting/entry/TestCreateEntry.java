@@ -16,11 +16,6 @@ public class TestCreateEntry {
 
 	@Test
 	public void postIsSuccessfull() {
-		driver.findElement(By.id("login")).click();
-		driver.findElement(By.id("email")).sendKeys("admin1@gmail.com");
-		driver.findElement(By.id("password")).sendKeys("admin1");
-		driver.findElement(By.id("btn-submit")).click();
-		
 		driver.findElement(By.id("create_post")).click();
 		driver.findElement(By.id("title")).sendKeys("My newest post");
 		driver.findElement(By.id("body")).sendKeys("This is a post.");
@@ -32,16 +27,30 @@ public class TestCreateEntry {
 		assertTrue(currentMessage.contains("Entry 'My newest post' created successfully."));
 	}
 	
+	@Test
+	public void checkDuplicated() {
+		driver.get("localhost:5000/admin/entry/");
+		String lastPost = driver.findElement(By.xpath("/html/body/div/table/tbody/tr[2]/td[3]")).getText();
+		assertTrue(lastPost.contains("My newest post"));
+	}
+	
 	@Before
 	public void setUp() {
 		System.setProperty("webdriver.chrome.driver", "C:\\ChromeDriver\\chromedriver.exe");
 		driver = new ChromeDriver();
-		driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		driver.get("localhost:5000");
+		
+		driver.findElement(By.id("login")).click();
+		driver.findElement(By.id("email")).sendKeys("admin1@gmail.com");
+		driver.findElement(By.id("password")).sendKeys("admin1");
+		driver.findElement(By.id("btn-submit")).click();
 	}
 
 	@After
 	public void teardDown() {
 		driver.quit();
+		driver.get("localhost:5000/admin/entry/");
+		
 	}
 }
