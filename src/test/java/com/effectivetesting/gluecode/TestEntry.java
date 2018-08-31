@@ -36,20 +36,17 @@ public class TestEntry {
 				.goToCreateEntry()
 				.createEntry("Dummy entry", "this is the text");
 		driver.findElement(By.xpath("//*[@id=\"logout\"]/a")).click();
-	    throw new PendingException();
 		}
 	
 	@When("^goes to entry section$")
 	public void goes_to_entry_section() throws Throwable {
 		driver.get("http://localhost:5000/entries/");
-		throw new PendingException();
 	}
 	
 	@Then("^he sees the entry \"([^\"]*)\"$")
 	public void he_sees_the_entry(String arg1) throws Throwable {
 		String foundEntry = driver.findElement(By.xpath("//*[@id=\"content_title\"]/p[1]/a")).getText();
 		assertTrue(foundEntry.contains("Dummy entry"));
-		throw new PendingException();
 	}
 	
 	
